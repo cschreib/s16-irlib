@@ -67,12 +67,17 @@ pro get_s16_template, tdust=tdust, fpah=fpah, ir8=ir8, $
     id = long(round(interpol(findgen(nsed), dustlib.tdust, tdust)))
     idsed = id
 
+    if id lt 0 or id ge nsed then begin
+        message, 'invalid Tdust value (min:'+strn(min(dustlib.tdust))+$
+            ', max:'+strn(max(dustlib.tdust))+')'
+    endif
+
     ; Get the PAH mass fraction from IR8 (if asked)
     if n_elements(ir8) ne 0 and keyword_set(from_ir8) then begin
         fpah = (dustlib.lir[id] - ir8*dustlib.l8[id]) / $
             (ir8*(pahlib.l8[id] - dustlib.l8[id]) - (pahlib.lir[id] - dustlib.lir[id]))
 
-        if fpah lt 0 or fpah gt 1 then begin
+        if fpah lt 0 or fpah gt 1 or ~finite(fpah) then begin
             ratios = [dustlib.lir[id]/dustlib.l8[id], pahlib.lir[id]/pahlib.l8[id]]
             message, 'invalid IR8 value for this Tdust (min:'+$
                 strn(min(ratios))+', max:'+strn(max(ratios))+')'
