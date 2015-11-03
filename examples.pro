@@ -389,8 +389,8 @@ H0 = 70.0
 d = lumdist(z, H0=H0, omega_m=omega_m, Lambda0=omega_L, /silent)
 
 ; Here is the conversion
-fnu = (mJy*Lsol/(c*4.0*!dpi*Mpc^2))*(1.0 + z)*lambda*nulnu/(d^2)
 lambda_obs = lambda*(1.0 + z)
+fnu = (mJy*Lsol/(c*4.0*!dpi*Mpc^2))*lambda_obs*nulnu/d^2
 
 plot, lambda_obs, fnu, xr=[1,1000], yr=[0.01,1d2], /xlog, /ylog, $
     xtit='observed wavelength [um]', ytit='S!dnu!n [mJy]', charsize=2
