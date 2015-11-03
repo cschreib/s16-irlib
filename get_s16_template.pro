@@ -82,9 +82,11 @@ pro get_s16_template, tdust=tdust, fpah=fpah, ir8=ir8, $
             message, 'invalid IR8 value for this Tdust (min:'+$
                 strn(min(ratios))+', max:'+strn(max(ratios))+')'
         endif
-    endif
-
-    if n_elements(fpah) eq 0 then message, 'missing PAH mass fraction (fpah=...)'
+    endif else if n_elements(fpah) ne 0 then begin
+        if fpah lt 0 or fpah gt 1 or ~finite(fpah) then begin
+            message, 'invalid fPAH value (min:0, max:1)'
+        endif
+    endif else message, 'missing PAH mass fraction (fpah=...)'
 
     ; Build combined SED
     lambda = reform(dustlib.lam[*,id])
