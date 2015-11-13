@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>The S16 library by cschreib</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/cschreib/s16-irlib">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/cschreib/s16-irlib/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/cschreib/s16-irlib/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>The S16 library</h1>
+          <p>Library of infrared spectral energy distributions of galaxies calibrated on the deepest Herschel images</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/cschreib">cschreib</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>
+<a id="short-description" class="anchor" href="#short-description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Short description</h1>
+
+<p>This is a library of model infrared spectra of galaxies, calibrated on the deepest Herschel images in the CANDELS fields (see Schreiber et al. 2016 for more information). These are based on the physically-motivated dust model of <a href="http://adsabs.harvard.edu/abs/2011A%26A...536A..88G">Galliano et al. (2011)</a>, using amorphous carbon grains.</p>
+
+<p>The library is composed of two files: 's16_dust.fits' which contains the dust continuum templates created by big grains, and 's16_pah.fits' which contains the mid-infrared features coming from polycyclic aromatic hydrocarbon molecules (PAHs). Each file contains the same number of templates (200), each corresponding to a different intensity of the interstellar radiation field () or, equivalently, to a different dust temperature (Tdust). These templates correspond to the luminosity (expressed in units of the solar luminosity) emitted by a cloud of dust of mass equal to one solar mass. The big grain and PAH templates can be co-added with an arbitrary weight (fPAH) to form a full dust spectrum.</p>
+
+<h1>
+<a id="how-to-get-it" class="anchor" href="#how-to-get-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to get it?</h1>
+
+<p>You can get the library either by cloning the git repository:</p>
+
+<pre><code>git clone https://github.com/cschreib/ifni.git
+</code></pre>
+
+<p>or by downloading .tgz or .zip archives from this page.</p>
+
+<h1>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it?</h1>
+
+<p>To facilitate the usage of this library, two <a href="http://www.exelisvis.com/ProductsServices/IDL.aspx">IDL</a>/<a href="http://gnudatalanguage.sourceforge.net/">GDL</a> scripts are provided. The first, 'get_s16_template.pro', will create a new spectrum given Tdust and fPAH. The second, 'get_s16_template_calib.pro', will use the calibrated evolution of Tdust and fPAH with redshift (plus an additional, optional dependence on the Main Sequence offset) that is published in the paper. Therefore it will create a spectrum based solely on the redshift. Further documentation is available in each file.</p>
+
+<p>Lastly, an example IDL/GDL script ('example.pro') is provided to show how the above procedures can be used, and to illustrate the features of the library.</p>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
