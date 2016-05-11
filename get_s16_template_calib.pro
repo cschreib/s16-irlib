@@ -44,11 +44,11 @@ pro get_s16_template_calib, z=z, rsb=rsb, tdust=tdust, fpah=fpah, ir8=ir8, $
     lir=lir, mdust=mdust, $
     dustlib=dustlib, pahlib=pahlib, lambda=lambda, nulnu=nulnu
 
-    if n_elements(rsb) eq 0 then rsb = 1
+    if n_elements(rsb) eq 0 then rsb = 1.0
     if n_elements(z)   eq 0 then message, 'missing redshift (z=...)'
 
     ; Get the dust temperature
-    tdust = 27.5*(1+z)^0.34 + 5.8*(alog10(rsb) > 0)
+    tdust = 4.65*(z-2.0) + 31.0 + 6.6*alog10(rsb)
 
     ; Find corresponding SED in library
     nsed = n_elements(dustlib.lam[0,*])
