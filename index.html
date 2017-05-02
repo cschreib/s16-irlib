@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>The S16 library by cschreib</title>
+    <title>The S17 library by cschreib</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-dark.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -20,9 +20,9 @@
   <body>
       <div id="header">
         <nav>
-          <li class="fork"><a href="https://github.com/cschreib/s16-irlib">View On GitHub <img border="0" src="images/octocat-white-small.png" alt="GitHub" style="vertical-align:middle"></a></li>
-          <li class="downloads"><a href="https://github.com/cschreib/s16-irlib/zipball/master"><img border="0" src="images/archive.png" alt="ZIP" style="vertical-align:middle"> ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/cschreib/s16-irlib/tarball/master"><img border="0" src="images/archive.png" alt="TAR" style="vertical-align:middle"> TAR</a></li>
+          <li class="fork"><a href="https://github.com/cschreib/s17-irlib">View On GitHub <img border="0" src="images/octocat-white-small.png" alt="GitHub" style="vertical-align:middle"></a></li>
+          <li class="downloads"><a href="https://github.com/cschreib/s17-irlib/zipball/master"><img border="0" src="images/archive.png" alt="ZIP" style="vertical-align:middle"> ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/cschreib/s17-irlib/tarball/master"><img border="0" src="images/archive.png" alt="TAR" style="vertical-align:middle"> TAR</a></li>
           <li class="title">DOWNLOADS:</li>
         </nav>
       </div><!-- end header -->
@@ -31,7 +31,7 @@
 
       <section>
         <div id="title">
-          <h1>The S16 library</h1>
+          <h1>The S17 library</h1>
           <p>Library of infrared spectral energy distributions of galaxies calibrated on the deepest Spitzer and Herschel images</p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/cschreib">cschreib</a></span>
@@ -46,24 +46,19 @@
 
 <a id="short-description" class="anchor" href="#short-description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Short description</h1>
 
-<p>This is a library of model infrared spectra of galaxies, calibrated on the deepest Spitzer and Herschel images in the CANDELS fields (see Schreiber et al. 2016 for more information). These are based on the physically-motivated dust model of <a href="http://adsabs.harvard.edu/abs/2011A%26A...536A..88G">Galliano et al. (2011)</a>, using amorphous carbon grains.</p>
+<p>This is a library of model infrared spectra of galaxies, calibrated on the deepest Spitzer and Herschel images in the CANDELS fields (see Schreiber et al. 2017 for more information). These are based on the physically-motivated dust model of <a href="http://adsabs.harvard.edu/abs/2011A%26A...536A..88G">Galliano et al. (2011)</a>, using amorphous carbon grains.</p>
 
-<p>The library is composed of two files: 's16_dust.fits' which contains the dust continuum templates created by big grains, and 's16_pah.fits' which contains the mid-infrared features coming from polycyclic aromatic hydrocarbon molecules (PAHs). Each file contains the same number of templates (200), each corresponding to a different intensity of the interstellar radiation field (&lt;U&gt;) or, equivalently, to a different dust temperature (Tdust). These templates correspond to the luminosity (expressed in units of the solar luminosity) emitted by a cloud of dust of mass equal to one solar mass. The big grain and PAH templates can be co-added with an arbitrary weight (fPAH) to form a full dust spectrum.</p>
+<p>The library is composed of two files: 's17_dust.fits' which contains the dust continuum templates created by big grains, and 's17_pah.fits' which contains the mid-infrared features coming from polycyclic aromatic hydrocarbon molecules (PAHs). Each file contains the same number of templates (150), each corresponding to a different intensity of the interstellar radiation field (&lt;U&gt;) or, equivalently, to a different dust temperature (Tdust). These templates correspond to the luminosity (expressed in units of the solar luminosity) emitted by a cloud of dust of mass equal to one solar mass. The big grain and PAH templates can be co-added with an arbitrary weight (fPAH) to form a full dust spectrum and vary the IR8 ratio (LIR/L8).</p>
 
 <h1>
 <a id="how-to-get-it" class="anchor" href="#how-to-get-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to get it?</h1>
 
-<p>You can get the library either by cloning the git repository:</p>
-
-<pre><code>git clone https://github.com/cschreib/s16-irlib.git
-</code></pre>
-
-<p>or by downloading .tgz or .zip archives from this page.</p>
+<p>You can get the library by downloading one of the .tgz or .zip archives, linked at the top of the page.</p>
 
 <h1>
 <a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to use it?</h1>
 
-<p>To facilitate the usage of this library, two <a href="http://www.exelisvis.com/ProductsServices/IDL.aspx">IDL</a>/<a href="http://gnudatalanguage.sourceforge.net/">GDL</a> scripts are provided. The first, 'get_s16_template.pro', will create a new spectrum given Tdust and fPAH. The second, 'get_s16_template_calib.pro', will use the calibrated evolution of Tdust and fPAH with redshift (plus an additional, optional dependence on the Main Sequence offset) that is published in the paper. Therefore it will create a spectrum based solely on the redshift. Further documentation is available in each file.</p>
+<p>To facilitate the usage of this library, two <a href="http://www.exelisvis.com/ProductsServices/IDL.aspx">IDL</a>/<a href="http://gnudatalanguage.sourceforge.net/">GDL</a> scripts are provided. The first, 'get_s17_template.pro', will create a new spectrum given Tdust and IR8. The second, 'get_s17_template_calib.pro', will use the calibrated evolution of Tdust and IR8 with redshift (plus an additional, optional dependence on the Main Sequence offset) that is published in the paper. Therefore it will create a spectrum based solely on the redshift. Further documentation is available in each file.</p>
 
 <p>Lastly, an example IDL/GDL script ('example.pro') is provided to show how the above procedures can be used, and to illustrate the features of the library.</p>
       </section>
