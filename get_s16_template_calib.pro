@@ -48,14 +48,14 @@ pro get_s16_template_calib, z=z, rsb=rsb, tdust=tdust, fpah=fpah, ir8=ir8, $
     if n_elements(z)   eq 0 then message, 'missing redshift (z=...)'
 
     ; Get the dust temperature
-    tdust = 4.65*(z-2.0) + 31.0 + 6.6*alog10(rsb)
+    tdust = 23.7*(1+z)^0.34 + 6.42*alog10(rsb)
 
     ; Find corresponding SED in library
     nsed = n_elements(dustlib.lam[0,*])
     id = long(round(interpol(findgen(nsed), dustlib.tdust, tdust)))
 
-    ; Get the PAH mass fraction
-    fpah = (0.02 + 0.035*(1 - (z/2 < 1)))*10^(-0.23*alog10(rsb) < 0)
+    ; Get the IR8
+    ir8 = (3.91 + 2.95*(z-1 > 0 < 1))*rsb^0.40
 
     ; Get the full SED
     get_s16_template, tdust=tdust, fpah=fpah, ir8=ir8, lir=lir, mdust=mdust, $
