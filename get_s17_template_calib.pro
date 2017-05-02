@@ -1,7 +1,7 @@
 ; Description
 ; -----------
 ;
-; Build a new combined IR template from the S16 library by specifying
+; Build a new combined IR template from the S17 library by specifying
 ; a redshift and position with respect to the Main Sequence. The
 ; returned SED will be normalized to a dust mass of one solar mass.
 ;
@@ -9,8 +9,8 @@
 ; Parameters (required)
 ; ----------
 ;
-;  - dustlib: the S16 dust library
-;  - pahlib: the S16 PAH library
+;  - dustlib: the S17 dust library
+;  - pahlib: the S17 PAH library
 ;  - z: the redshift of your object
 ;  - rsb: the starburstiness of your object, i.e., the ratio between its
 ;         SFR and the SFR it would have on the Main Sequence. This
@@ -24,8 +24,8 @@
 ;  - lambda: the wavelength of the SED
 ;  - nulnu: the SED (in units of solar luminosity)
 ;  - tdust: the dust temperature in Kelvin
-;  - fpah: the PAH mass fraction (from 0 to 1)
 ;  - ir8: the LIR to L8 ratio
+;  - fpah: the PAH mass fraction (from 0 to 1)
 ;  - lir: the total IR luminosity of the template (8-1000um) in solar
 ;         luminosity
 ;  - mdust: the dust mass of the template, 1 solar mass by construction
@@ -40,7 +40,7 @@
 ; normalized template, so that you can renormalize it to unit LIR.
 ;
 ;
-pro get_s16_template_calib, z=z, rsb=rsb, tdust=tdust, fpah=fpah, ir8=ir8, $
+pro get_s17_template_calib, z=z, rsb=rsb, tdust=tdust, fpah=fpah, ir8=ir8, $
     lir=lir, mdust=mdust, $
     dustlib=dustlib, pahlib=pahlib, lambda=lambda, nulnu=nulnu
 
@@ -58,6 +58,6 @@ pro get_s16_template_calib, z=z, rsb=rsb, tdust=tdust, fpah=fpah, ir8=ir8, $
     ir8 = (3.91 + 2.95*(z-1 > 0 < 1))*rsb^0.40
 
     ; Get the full SED
-    get_s16_template, tdust=tdust, fpah=fpah, ir8=ir8, lir=lir, mdust=mdust, $
+    get_s17_template, tdust=tdust, fpah=fpah, ir8=ir8, lir=lir, mdust=mdust, $
         dustlib=dustlib, pahlib=pahlib, lambda=lambda, nulnu=nulnu
 end

@@ -1,5 +1,5 @@
 ; This example file shows you how to use the library and the helper functions that are
-; provided alongside (get_s16_template and get_s16_template_calib).
+; provided alongside (get_s17_template and get_s17_template_calib).
 
 ; Launch this code in IDL (or GDL) and type ".continue" when you want to move forward in
 ; the list of examples.
@@ -8,8 +8,8 @@
 ; load the library files in memory. These are FITS tables (column oriented) that can be
 ; read by 'mrdfits' (this procedure is part of the NASA IDL astronomy library).
 
-dustlib = mrdfits('s16_dust.fits', 1, /silent)
-pahlib  = mrdfits('s16_pah.fits',  1, /silent)
+dustlib = mrdfits('s17_dust.fits', 1, /silent)
+pahlib  = mrdfits('s17_pah.fits',  1, /silent)
 no_stop = 1
 
 ; Now we are ready to begin, whenever you want.
@@ -28,15 +28,15 @@ print, 'Example 1: finding a template, knowing Tdust and fPAH'
 print, '-----------------------------------------------------'
 
 ; We know this:
-tdust = 38.0 ; the dust temperature (Kelvins)
-fpah = 0.04  ; the PAH mass fraction
+tdust = 35.0 ; the dust temperature (Kelvins)
+ir8 = 4.0  ; the LIR/L8 ratio
 
 ; We want to get the corresponding SED.
-; Simply call 'get_s16_template':
+; Simply call 'get_s17_template':
 
-get_s16_template, $
+get_s17_template, $
     ; Input parameters
-    dustlib=dustlib, pahlib=pahlib, tdust=tdust, fpah=fpah, $
+    dustlib=dustlib, pahlib=pahlib, tdust=tdust, ir8=ir8, $
     ; Output parameters
     lambda=lambda, nulnu=nulnu, lir=lir, mdust=mdust
 
@@ -46,7 +46,7 @@ get_s16_template, $
 
 ; The procedure has given us to other values: lir and mdust, which can be used to
 ; normalize the SED.
-print, 'with Tdust='+strn(tdust)+' K and fPAH='+strn(fpah)
+print, 'with Tdust='+strn(tdust)+' K and IR8='+strn(ir8)
 print, 'we have Mdust='+strn(mdust)+' Msun and LIR='+strn(lir)+' Lsun'
 
 ; The current SED is normalized to unit Mdust
@@ -91,7 +91,7 @@ colorsB = long(x*color1[2] + (1-x)*color2[2])
 colors = colorsR + colorsG*256L + colorsB*65536L
 
 ; Define the Tdust grid
-fpah = 0.04
+ir8 = 4.0
 tdust_min = 25
 tdust_max = 60
 tdust = (tdust_max - tdust_min)*findgen(nsed)/(nsed-1) + tdust_min
@@ -104,7 +104,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[10,2d4], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust[i], fpah=fpah, $
+    get_s17_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust[i], ir8=ir8, $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     oplot, lambda, nulnu, color=colors[i]
@@ -120,7 +120,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[0.01,1.0], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust[i], fpah=fpah, $
+    get_s17_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust[i], ir8=ir8, $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     nulnu /= lir
@@ -137,10 +137,10 @@ stop
 
 print, ''
 print, '-----------------------'
-print, 'Example 3: varying fPAH'
+print, 'Example 3: varying IR8'
 print, '-----------------------'
 
-; We will show how multiple SEDs of different fPAH values, each with a different color
+; We will show how multiple SEDs of different IR8 values, each with a different color
 
 ; First build the color array
 nsed = 40
@@ -151,11 +151,11 @@ colorsG = long(x*color1[1] + (1-x)*color2[1])
 colorsB = long(x*color1[2] + (1-x)*color2[2])
 colors = colorsR + colorsG*256L + colorsB*65536L
 
-; Define the fPAH grid
+; Define the IR8 grid
 tdust = 35.0
-fpah_min = 0.0
-fpah_max = 0.2
-fpah = (fpah_max - fpah_min)*findgen(nsed)/(nsed-1) + fpah_min
+ir8_min = 2.0
+ir8_max = 20.0
+ir8 = ir8_min*10d0^((alog10(ir8_max) - alog10(ir8_min))*findgen(nsed)/(nsed-1))
 
 ; First show the templates in unit Mdust
 
@@ -165,7 +165,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[10,2d4], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust, fpah=fpah[i], $
+    get_s17_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust, ir8=ir8[i], $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     oplot, lambda, nulnu, color=colors[i]
@@ -181,7 +181,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[0.01,1.0], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust, fpah=fpah[i], $
+    get_s17_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust, ir8=ir8[i], $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     nulnu /= lir
@@ -206,19 +206,19 @@ z = 1.85  ; the redshift
 rsb = 2.5 ; the offset of the galaxy from the Main Sequence (SFR/SFR_MS)
 
 ; We want to get the typical SED of such a galaxy.
-; For this we can use the calibrations of Tdust and fPAH from S16.
-; These calibrations are implemented in 'get_s16_template_calib':
+; For this we can use the calibrations of Tdust and IR8 from S17.
+; These calibrations are implemented in 'get_s17_template_calib':
 
-get_s16_template_calib, $
+get_s17_template_calib, $
     ; Input parameters
     dustlib=dustlib, pahlib=pahlib, z=z, rsb=rsb, $
     ; Output parameters
     lambda=lambda, nulnu=nulnu, $
-    tdust=tdust, fpah=fpah, lir=lir, mdust=mdust
+    tdust=tdust, ir8=ir8, lir=lir, mdust=mdust
 
 ; The situation is the same as with the previous example.
 print, 'with z='+strn(z)+' and RSB='+strn(rsb)
-print, 'we have Tdust='+strn(tdust)+' K and fPAH='+strn(fpah)
+print, 'we have Tdust='+strn(tdust)+' K and IR8='+strn(ir8)
 print, 'we have Mdust='+strn(mdust)+' Msun and LIR='+strn(lir)+' Lsun'
 
 ; The current SED is normalized to unit Mdust
@@ -262,7 +262,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[10,2d4], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb, z=z[i], $
+    get_s17_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb, z=z[i], $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     oplot, lambda, nulnu, color=colors[i]
@@ -278,7 +278,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[0.01,1.0], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb, z=z[i], $
+    get_s17_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb, z=z[i], $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     nulnu /= lir
@@ -323,7 +323,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[10,2d4], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb[i], z=z, $
+    get_s17_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb[i], z=z, $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     oplot, lambda, nulnu, color=colors[i]
@@ -339,7 +339,7 @@ plot, lambda, nulnu, /nodata, xr=[1,1000], yr=[0.01,1.0], /xlog, /ylog, $
 
 ; Plot the SEDs, normalized to unit Mdust
 for i=0, nsed-1 do begin
-    get_s16_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb[i], z=z, $
+    get_s17_template_calib, dustlib=dustlib, pahlib=pahlib, rsb=rsb[i], z=z, $
         lambda=lambda, nulnu=nulnu, lir=lir
 
     nulnu /= lir
@@ -365,9 +365,9 @@ print, '-------------------------------'
 
 ; Using the first SED we saw
 tdust = 38.0 ; the dust temperature (Kelvins)
-fpah = 0.04  ; the PAH mass fraction
+ir88 = 4.0   ; the LIR/L8 ratio
 
-get_s16_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust, fpah=fpah, $
+get_s17_template, dustlib=dustlib, pahlib=pahlib, tdust=tdust, ir8=ir8, $
     lambda=lambda, nulnu=nulnu, lir=lir
 
 ; Pick a LIRG at z=1

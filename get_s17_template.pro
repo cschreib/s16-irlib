@@ -1,26 +1,26 @@
 ; Description
 ; -----------
 ;
-; Build a new combined IR template from the S16 library by specifying
-; directly its dust temperature and PAH mass fraction. The returned SED
+; Build a new combined IR template from the S17 library by specifying
+; directly its dust temperature and IR-to-8um ratio. The returned SED
 ; will be normalized to a dust mass of one solar mass.
 ;
 ;
 ; Parameters (required)
 ; ---------------
 ;
-;  - dustlib: the S16 dust library
-;  - pahlib: the S16 PAH library
+;  - dustlib: the S17 dust library
+;  - pahlib: the S17 PAH library
 ;  - tdust: the dust temperature (in Kelvin)
-;  - fpah: the PAH mass fraction, between 0 and 1
-;  - ir8: the ratio between LIR and L8. This parameter can be given
-;         in place of 'fpah', in which case the procedure will determine
-;         the corresponding fPAH value. Not all values of IR8 are
+;  - ir8: the ratio between LIR and L8. Not all values of IR8 are
 ;         physical (the range is typically from 0.3 to 30), and the
 ;         procedure will emit an error if such an invalid value is
-;         requested. Note finally that, for the procedure to use this
-;         value, the keyword 'from_ir8' must be set.
-;  - from_ir8: set this keyword to compute 'fpah' from 'ir8'
+;         requested.
+;  - fpah: the PAH mass fraction, between 0 and 1. This parameter can be
+;         given in place of 'ir8', in which case the procedure will
+;         determine the corresponding IR8 value. For the procedure to use
+;         this value, the keyword 'from_fpah' must be set.
+;  - from_fpah: set this keyword to compute 'ir8' from 'fpah'
 ;
 ;
 ; Output
@@ -52,7 +52,7 @@
 ; normalized template, so that you can renormalize it to unit LIR.
 ;
 ;
-pro get_s16_template, tdust=tdust, fpah=fpah, ir8=ir8, $
+pro get_s17_template, tdust=tdust, fpah=fpah, ir8=ir8, $
     lir=lir, mdust=mdust, from_fpah=from_fpah, from_ir8=from_ir8, $
     dustlib=dustlib, pahlib=pahlib, lambda=lambda, nulnu=nulnu, $
     idsed=idsed
@@ -73,7 +73,7 @@ pro get_s16_template, tdust=tdust, fpah=fpah, ir8=ir8, $
     endif
 
     ; Get the PAH mass fraction from IR8 (if asked)
-    if n_elements(ir8) ne 0 and keyword_set(from_ir8) then begin
+    if n_elements(ir8) ne 0  then begin
         fpah = 1.0/(1.0 - (pahlib.lir[id] - ir8*pahlib.l8[id])/(dustlib.lir[id] - ir8*dustlib.l8[id]))
 
         if fpah lt 0 or fpah gt 1 or ~finite(fpah) then begin
@@ -81,7 +81,7 @@ pro get_s16_template, tdust=tdust, fpah=fpah, ir8=ir8, $
             message, 'invalid IR8 value for this Tdust (min:'+$
                 strn(min(ratios))+', max:'+strn(max(ratios))+')'
         endif
-    endif else if n_elements(fpah) ne 0 then begin
+    endif else if n_elements(fpah) ne 0 and keyword_set(from_fpah) then begin
         if fpah lt 0 or fpah gt 1 or ~finite(fpah) then begin
             message, 'invalid fPAH value (min:0, max:1)'
         endif
