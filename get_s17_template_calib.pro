@@ -48,14 +48,14 @@ pro get_s17_template_calib, z=z, rsb=rsb, tdust=tdust, fpah=fpah, ir8=ir8, $
     if n_elements(z)   eq 0 then message, 'missing redshift (z=...)'
 
     ; Get the dust temperature
-    tdust = 23.7*(1+z)^0.34 + 6.42*alog10(rsb)
+    tdust = 32.9 + 4.60*(z-2) + 10.1*alog10(rsb)
 
     ; Find corresponding SED in library
     nsed = n_elements(dustlib.lam[0,*])
     id = long(round(interpol(findgen(nsed), dustlib.tdust, tdust)))
 
     ; Get the IR8
-    ir8 = (3.91 + 2.95*(z-1 > 0 < 1))*rsb^0.40
+    ir8 = (4.08 + 3.29*(z-1 > 0 < 1))*rsb^0.66
 
     ; Get the full SED
     get_s17_template, tdust=tdust, fpah=fpah, ir8=ir8, lir=lir, mdust=mdust, $
