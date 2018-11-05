@@ -1,6 +1,6 @@
 # The S17 library
 
-This is a library of model infrared spectra of galaxies, calibrated on the deepest Herschel images in the CANDELS fields. These are based on the physically-motivated dust model of [Galliano et al. (2011)], using amorphous carbon grains.
+This is a library of model infrared spectra of galaxies introduced in [Schreiber et al. (2018)], calibrated on the deepest Herschel images in the CANDELS fields. These are based on the physically-motivated dust model of [Galliano et al. (2011)], using amorphous carbon grains.
 
 The library is composed of two files: 's17_dust.fits' which contains the dust continuum templates created by big grains, and 's17_pah.fits' which contains the mid-infrared features coming from polycyclic aromatic hydrocarbon molecules (PAHs). Each file contains the same number of templates (150), each corresponding to a different intensity of the interstellar radiation field (<U>) or, equivalently, to a different dust temperature (Tdust). These templates correspond to the luminosity (expressed in units of the solar luminosity) emitted by a cloud of dust of mass equal to one solar mass. The big grain and PAH templates can be co-added to form a full dust spectrum.
 
@@ -8,7 +8,9 @@ To facilitate the usage of this library, two [IDL]/[GDL] scripts are provided. T
 
 Lastly, an example IDL/GDL script ('example.pro') is provided to show how the above procedures can be used, and to illustrate the features of the library.
 
+*Warning*: if you are trying to reproduce the fits from Schreiber et al. (2018), beware that there is a typo in Table 1 of that paper. The dust masses are actually given in units of 10^8 Msun, and not 10^7 as incorrectly written in the table header.
 
+[Schreiber et al. (2018)]: http://adsabs.harvard.edu/abs/2018A%26A...609A..30S
 [Galliano et al. (2011)]: http://adsabs.harvard.edu/abs/2011A%26A...536A..88G
 [IDL]: http://www.exelisvis.com/ProductsServices/IDL.aspx
 [GDL]: http://gnudatalanguage.sourceforge.net/
